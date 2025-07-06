@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>刘飞 & 周彤 婚礼邀请</title>
+    <title>刘飞 & 周彤的婚礼倒计时</title>
     <style>
         * {
             margin: 0;
@@ -12,307 +11,574 @@
             box-sizing: border-box;
             font-family: 'Microsoft YaHei', 'STHeiti', sans-serif;
         }
-
+        
         body {
-            background: #ffe6f2;
-            color: #7a4b5e;
-            line-height: 1.8;
-            font-size: 18px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: #5d2b2c;
+            line-height: 1.6;
+            min-height: 100vh;
             padding: 20px;
+            background-attachment: fixed;
         }
-
-        /* 修改后的倒计时样式 */
-        .countdown {
-            background: #ff99c8;
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
             padding: 30px;
+            background-color: rgba(255, 255, 255, 0.85);
             border-radius: 15px;
-            margin: 30px 0;
-            box-shadow: 0 10px 20px rgba(255, 153, 200, 0.3);
-        }
-
-        .flip-clock {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-        }
-
-        .flip-number {
-            background: #fff;
-            padding: 15px 10px;
-            border-radius: 8px;
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: #ff3366;
-            min-width: 60px;
-            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             position: relative;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
         }
-
-        .flip-number::after {
+        
+        .container::before {
             content: "";
             position: absolute;
-            top: 50%;
+            top: 0;
             left: 0;
             right: 0;
-            height: 2px;
-            background: rgba(0, 0, 0, 0.1);
+            height: 10px;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #e74c3c);
         }
-
-        .seconds-label {
-            font-size: 2rem;
-            color: white;
-            margin-left: 15px;
-            align-self: flex-end;
-            padding-bottom: 15px;
-        }
-
-        /* 新人信息 */
-        .couple-info {
-            background: linear-gradient(45deg, #ffb3d9, #ffffff);
-            padding: 40px;
-            border-radius: 15px;
-            margin: 40px 0;
+        
+        header {
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 3px solid #ff99c8;
-        }
-
-        .couple-info h2 {
-            font-size: 3.5rem;
-            color: #ff3366;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 0px white;
-        }
-
-        .couple-info p {
-            font-size: 1.5rem;
-            margin: 15px 0;
-        }
-
-        /* 时间线样式 */
-        .timeline {
+            margin-bottom: 30px;
             position: relative;
-            padding: 60px 0;
+            padding-bottom: 20px;
         }
-
-        .timeline::before {
+        
+        header::after {
             content: "";
             position: absolute;
-            left: 50%;
-            width: 4px;
-            height: 100%;
-            background: #ff99c8;
-            transform: translateX(-50%);
+            bottom: 0;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e74c3c, transparent);
         }
-
-        .timeline-item {
-            position: relative;
-            width: 45%;
-            padding: 25px;
-            margin: 30px 0;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        
+        h1 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+            letter-spacing: 2px;
         }
-
-        .timeline-item:nth-child(odd) {
-            margin-left: 55%;
-        }
-
-        .timeline-item:nth-child(even) {
-            margin-right: 55%;
-        }
-
-        .timeline-date {
-            color: #ff3366;
-            font-size: 1.4rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .timeline-images {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .timeline-images img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            transition: transform 0.3s;
-        }
-
-        .timeline-images img:hover {
-            transform: scale(1.05);
-        }
-
-        /* 邮件表单 */
-        .email-form {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            margin: 50px 0;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ff99c8;
-            border-radius: 8px;
-            font-size: 1.1rem;
-        }
-
-        button {
-            background: linear-gradient(45deg, #ff6699, #ff3366);
+        
+        .countdown {
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
             color: white;
-            padding: 18px 45px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .couple-info {
+            background: rgba(255, 245, 243, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 35px;
+            text-align: center;
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+        
+        .couple-info::before {
+            content: "❤";
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            font-size: 30px;
+            color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .couple-info::after {
+            content: "❤";
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            font-size: 30px;
+            color: #e74c3c;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .couple-info p {
+            margin: 12px 0;
+            font-size: 1.1rem;
+            color: #5d2b2c;
+        }
+        
+        .couple-info strong {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 100%;
+            margin: 40px 0;
+            padding: 20px 0;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: linear-gradient(to bottom, #e74c3c, #f39c12, #e74c3c);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            padding: 15px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background-color: #fff;
+            border: 4px solid #e74c3c;
+            border-radius: 50%;
+            top: 20px;
+            z-index: 1;
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -14px;
+        }
+        
+        .right::after {
+            left: -14px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(231, 76, 60, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-date {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-date::before {
+            content: "❀";
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .timeline-img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 15px;
+            background: linear-gradient(45deg, #f8e8e5, #fad0c4);
+            min-height: 200px;
+            transition: opacity 0.5s;
+            opacity: 0.9;
+            border: 1px solid rgba(231, 76, 60, 0.1);
+        }
+        
+        .timeline-img:hover {
+            opacity: 1;
+        }
+        
+        .email-form {
+            margin-top: 50px;
+            padding: 25px;
+            background: rgba(255, 245, 243, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+            position: relative;
+        }
+        
+        .email-form::before {
+            content: "✉";
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            font-size: 24px;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            color: #e74c3c;
+        }
+        
+        .email-form h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #e74c3c;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .email-form h2::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 30%;
+            right: 30%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #e74c3c, transparent);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #5d2b2c;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
+        }
+        
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #e74c3c, #f39c12);
+            color: white;
             border: none;
-            border-radius: 30px;
-            font-size: 1.2rem;
+            padding: 14px 20px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: transform 0.3s;
-            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
+            font-size: 1.1rem;
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            font-weight: bold;
         }
-
+        
         button:hover {
-            transform: translateY(-3px);
+            background: linear-gradient(45deg, #c0392b, #e67e22);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(231, 76, 60, 0.4);
         }
-
-        @media (max-width: 768px) {
-            .flip-number {
-                font-size: 2.5rem;
-                min-width: 60px;
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .heart-decoration {
+            position: absolute;
+            color: rgba(231, 76, 60, 0.2);
+            font-size: 20px;
+            z-index: -1;
+        }
+        
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 20px;
             }
-
-            .couple-info h2 {
-                font-size: 2.5rem;
+            
+            h1 {
+                font-size: 2rem;
             }
-
+            
+            .countdown {
+                font-size: 1.2rem;
+                padding: 15px;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
             .timeline-item {
-                width: 90%;
-                margin: 20px auto !important;
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
             }
-
-            .timeline::before {
-                left: 20px;
+            
+            .timeline-item::after {
+                left: 21px;
+            }
+            
+            .left::after, .right::after {
+                left: 21px;
+            }
+            
+            .right {
+                left: 0;
             }
         }
     </style>
 </head>
-
 <body>
+    <!-- 装饰性心形元素 -->
+    <div class="heart-decoration" style="top: 10%; left: 5%;">❤</div>
+    <div class="heart-decoration" style="top: 20%; right: 8%;">❤</div>
+    <div class="heart-decoration" style="bottom: 15%; left: 10%;">❤</div>
+    <div class="heart-decoration" style="bottom: 25%; right: 5%;">❤</div>
+    
     <div class="container">
-        <div class="countdown">
-            <h2 style="text-align: center; color: white; margin-bottom: 20px;">婚礼倒计时</h2>
-            <div class="flip-clock" id="countdown">
-                <span class="seconds-label">秒</span>
-            </div>
+        <header>
+            <h1>刘飞 & 周彤</h1>
+            <p>执子之手，与子偕老</p>
+        </header>
+        
+        <div class="countdown" id="countdown">
+            正在计算倒计时...
         </div>
+        
         <div class="couple-info">
-            <h2>刘飞 周彤</h2>
-            <p> 2025年8月29日 </p>
-            <p>贵州省贵阳市</p>
+            <p><strong><strong>刘飞 ❤ 周彤</strong></p>
+            <p><strong>❤ 2025年8月29日 ❤</p>
+            <p><strong>贵州省贵阳市观山湖区观山西路198号·W婚礼岛</p>
         </div>
-
+        
         <div class="timeline">
-            <!-- 时间线内容由JavaScript生成 -->
-        </div>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年11月</div>
+                    <img class="timeline-img lazy" data-src="241117.jpg">
+                </div>
+            </div>
+            
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-date">2024年12月</div>
+                    <img class="timeline-img lazy" data-src="241224.jpg">
+                </div>
+            </div>
+            
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年1月</div>
+                    <img class="timeline-img lazy" data-src="250101.jpg">
+                </div>
+            </div>
+            
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年2月</div>
+                    <img class="timeline-img lazy" data-src="250202.jpg">
+                </div>
+            </div>
 
-        <form class="email-form" action="mailto:liwfay@outlook.com" method="post" enctype="text/plain">
-            <h3 style="font-size: 2rem; color: #ff3366; text-align: center; margin-bottom: 30px;"> 送上您的祝福 </h3>
-            <div class="form-group">
-                <input type="text" placeholder="您的姓名" required>
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年3月</div>
+                    <img class="timeline-img lazy" data-src="250323.jpg">
+                </div>
             </div>
-            <div class="form-group">
-                <input type="email" placeholder="您的邮箱" required>
+
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年4月</div>
+                    <img class="timeline-img lazy" data-src="250420.jpg">
+                </div>
             </div>
-            <div class="form-group">
-                <textarea rows="6" placeholder="写下您真挚的祝福..." required></textarea>
+
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年5月</div>
+                    <img class="timeline-img lazy" data-src="250517.jpg">
+                </div>
             </div>
-            <div style="text-align: center;">
-                <button type="submit">发送祝福</button>
+
+            <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年6月</div>
+                    <img class="timeline-img lazy" data-src="250628.jpg">
+                </div>
             </div>
-        </form>
-        <!-- 其他内容保持不变 -->
+
+            <div class="timeline-item left">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年7月</div>
+                    <img class="timeline-img lazy" data-src="250701.jpg">
+                </div>
+            </div>
+
+            <!-- <div class="timeline-item right">
+                <div class="timeline-content">
+                    <div class="timeline-date">2025年8月</div>
+                    <img class="timeline-img lazy" data-src="250829.jpg">
+                </div>
+            </div> -->
+        </div>
+        
+        <div class="email-form">
+            <h2>发送祝福</h2>
+            <form id="blessingForm">
+                <div class="form-group">
+                    <label for="name">您的姓名:</label>
+                    <input type="text" id="name" name="name" required placeholder="请输入您的姓名">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">您的邮箱:</label>
+                    <input type="email" id="email" name="email" required placeholder="请输入您的邮箱">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">祝福留言:</label>
+                    <textarea id="message" name="message" required placeholder="写下您对新人的美好祝福..."></textarea>
+                </div>
+                
+                <button type="submit">发送祝福 ❤</button>
+            </form>
+        </div>
     </div>
 
     <script>
-        function updateTimer() {
-            const endDate = new Date('2025-08-29T00:00:00').getTime();
-            const now = new Date().getTime();
-            let diff = endDate - now;
-
-            if (diff < 0) diff = 0;
-
-            const totalSeconds = Math.floor(diff / 1000);
-            const secondsString = String(totalSeconds).padStart(5, '0');
-
-            const countdownHTML = [
-                ...secondsString.split('').map(num => `
-                    <div class="flip-number">${num}</div>
-                `),
-                `<span class="seconds-label">秒</span>`
-            ].join('');
-
-            document.getElementById('countdown').innerHTML = countdownHTML;
-
-            if (totalSeconds <= 0) {
-                clearInterval(timerInterval);
-                document.getElementById('countdown').innerHTML = `
-                    <div style="font-size: 2rem; color: white;">婚礼进行中！</div>
-                `;
+        // 倒计时功能
+        function updateCountdown() {
+            const endDate = new Date('2025-08-29T00:00:00');
+            const now = new Date();
+            const diff = endDate - now;
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "婚礼已经开始！";
+                return;
             }
-        }
-
-        let timerInterval = setInterval(updateTimer, 1000);
-        updateTimer();
-
-        /* 其他JavaScript代码保持不变 */
-        // 时间线数据
-        const timelineData = [
-            {
-                date: '2024年11月8日',
-                event: '订婚仪式',
-                images: ['241117.jpg', 'my_peking.jpg']
-            },
-            // 其他时间节点数据...
-            {
-                date: '2025年6月2日',
-                event: '订婚仪式',
-                images: ['my_cat.jpg']
-            },
-        ];
-
-        // 生成时间线
-        const timeline = document.querySelector('.timeline');
-        timelineData.forEach(item => {
-            const itemEl = document.createElement('div');
-            itemEl.className = 'timeline-item';
-            itemEl.innerHTML = `
-                <div class="timeline-date">${item.date} - ${item.event}</div>
-                <div class="timeline-images">
-                    ${item.images.map(img => `< img src="${img}" alt="${item.event}">`).join('')}
-                </div>
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            document.getElementById('countdown').innerHTML = `
+                <div>幸福倒计时</div>
+                <div style="font-size:1.8rem;margin:10px 0;">${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒</div>
+                <div>期待您的见证</div>
             `;
-            timeline.appendChild(itemEl);
+        }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // 图片懒加载
+        document.addEventListener("DOMContentLoaded", function() {
+            const lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+            
+            if ("IntersectionObserver" in window) {
+                let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyImage = entry.target;
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.onload = function() {
+                                lazyImage.style.opacity = '1';
+                            };
+                            lazyImage.classList.remove("lazy");
+                            lazyImageObserver.unobserve(lazyImage);
+                        }
+                    });
+                });
+                
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImageObserver.observe(lazyImage);
+                });
+            } else {
+                // 不支持IntersectionObserver的浏览器回退方案
+                lazyImages.forEach(function(lazyImage) {
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                });
+            }
+            
+            // 添加漂浮心形动画
+            const hearts = document.querySelectorAll('.heart-decoration');
+            hearts.forEach((heart, index) => {
+                // 随机动画延迟
+                heart.style.animationDelay = `${index * 2}s`;
+                // 添加浮动动画
+                heart.style.animation = `float ${6 + Math.random() * 6}s ease-in-out infinite alternate`;
+            });
+        });
+        
+        // 邮件发送功能
+        document.getElementById('blessingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // 这里应该替换为实际的邮件发送逻辑
+            // 由于浏览器端JavaScript无法直接发送邮件，这里只是模拟
+            // 实际应用中应该使用服务器端代码或第三方服务
+            
+            const mailtoLink = `mailto:liwfay@outlook.com?subject=来自${encodeURIComponent(name)}的婚礼祝福&body=${encodeURIComponent(message)}%0D%0A%0D%0A发件人: ${encodeURIComponent(name)}%0D%0A邮箱: ${encodeURIComponent(email)}`;
+            
+            window.location.href = mailtoLink;
+            
+            // 清空表单
+            this.reset();
+            
+            // 显示成功消息
+            alert('感谢您的祝福！邮件客户端已打开，请点击发送完成祝福。');
         });
     </script>
 </body>
-
 </html>
