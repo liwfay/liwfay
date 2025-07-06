@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刘飞 & 周彤 婚礼邀请</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', 'STHeiti', sans-serif;
+        }
+
+        body {
+            background: #ffe6f2;
+            color: #7a4b5e;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 修改后的倒计时样式 */
+        .countdown {
+            background: #ff99c8;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 10px 20px rgba(255, 153, 200, 0.3);
+        }
+
+        .flip-clock {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+        }
+
+        .flip-number {
+            background: #fff;
+            padding: 15px 10px;
+            border-radius: 8px;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ff3366;
+            min-width: 60px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .flip-number::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .seconds-label {
+            font-size: 2rem;
+            color: white;
+            margin-left: 15px;
+            align-self: flex-end;
+            padding-bottom: 15px;
+        }
+
+        /* 新人信息 */
+        .couple-info {
+            background: linear-gradient(45deg, #ffb3d9, #ffffff);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 3px solid #ff99c8;
+        }
+
+        .couple-info h2 {
+            font-size: 3.5rem;
+            color: #ff3366;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px white;
+        }
+
+        .couple-info p {
+            font-size: 1.5rem;
+            margin: 15px 0;
+        }
+
+        /* 时间线样式 */
+        .timeline {
+            position: relative;
+            padding: 60px 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: #ff99c8;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            width: 45%;
+            padding: 25px;
+            margin: 30px 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 55%;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-right: 55%;
+        }
+
+        .timeline-date {
+            color: #ff3366;
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .timeline-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .timeline-images img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .timeline-images img:hover {
+            transform: scale(1.05);
+        }
+
+        /* 邮件表单 */
+        .email-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 50px 0;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ff99c8;
+            border-radius: 8px;
+            font-size: 1.1rem;
+        }
+
+        button {
+            background: linear-gradient(45deg, #ff6699, #ff3366);
+            color: white;
+            padding: 18px 45px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 51, 102, 0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            .flip-number {
+                font-size: 2.5rem;
+                min-width: 60px;
+            }
+
+            .couple-info h2 {
+                font-size: 2.5rem;
+            }
+
+            .timeline-item {
+                width: 90%;
+                margin: 20px auto !important;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="countdown">
+            <h2 style="text-align: center; color: white; margin-bottom: 20px;">婚礼倒计时</h2>
+            <div class="flip-clock" id="countdown">
+                <span class="seconds-label">秒</span>
+            </div>
+        </div>
+        <div class="couple-info">
+            <h2>刘飞 周彤</h2>
+            <p> 2025年8月29日 </p>
+            <p>贵州省贵阳市</p>
+        </div>
+
+        <div class="timeline">
+            <!-- 时间线内容由JavaScript生成 -->
+        </div>
+
+        <form class="email-form" action="mailto:liwfay@outlook.com" method="post" enctype="text/plain">
+            <h3 style="font-size: 2rem; color: #ff3366; text-align: center; margin-bottom: 30px;"> 送上您的祝福 </h3>
+            <div class="form-group">
+                <input type="text" placeholder="您的姓名" required>
+            </div>
+            <div class="form-group">
+                <input type="email" placeholder="您的邮箱" required>
+            </div>
+            <div class="form-group">
+                <textarea rows="6" placeholder="写下您真挚的祝福..." required></textarea>
+            </div>
+            <div style="text-align: center;">
+                <button type="submit">发送祝福</button>
+            </div>
+        </form>
+        <!-- 其他内容保持不变 -->
+    </div>
+
+    <script>
+        function updateTimer() {
+            const endDate = new Date('2025-08-29T00:00:00').getTime();
+            const now = new Date().getTime();
+            let diff = endDate - now;
+
+            if (diff < 0) diff = 0;
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const secondsString = String(totalSeconds).padStart(5, '0');
+
+            const countdownHTML = [
+                ...secondsString.split('').map(num => `
+                    <div class="flip-number">${num}</div>
+                `),
+                `<span class="seconds-label">秒</span>`
+            ].join('');
+
+            document.getElementById('countdown').innerHTML = countdownHTML;
+
+            if (totalSeconds <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById('countdown').innerHTML = `
+                    <div style="font-size: 2rem; color: white;">婚礼进行中！</div>
+                `;
+            }
+        }
+
+        let timerInterval = setInterval(updateTimer, 1000);
+        updateTimer();
+
+        /* 其他JavaScript代码保持不变 */
+        // 时间线数据
+        const timelineData = [
+            {
+                date: '2024年11月8日',
+                event: '订婚仪式',
+                images: ['241117.jpg', 'my_peking.jpg']
+            },
+            // 其他时间节点数据...
+            {
+                date: '2025年6月2日',
+                event: '订婚仪式',
+                images: ['my_cat.jpg']
+            },
+        ];
+
+        // 生成时间线
+        const timeline = document.querySelector('.timeline');
+        timelineData.forEach(item => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'timeline-item';
+            itemEl.innerHTML = `
+                <div class="timeline-date">${item.date} - ${item.event}</div>
+                <div class="timeline-images">
+                    ${item.images.map(img => `< img src="${img}" alt="${item.event}">`).join('')}
+                </div>
+            `;
+            timeline.appendChild(itemEl);
+        });
+    </script>
+</body>
+
+</html>
